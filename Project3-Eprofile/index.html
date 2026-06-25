@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhishek Kumar | AI & Data Science Portfolio</title>
+    <style>
+        :root {
+            --bg: #050811;
+            --surface: rgba(13, 20, 38, 0.4);
+            --surface-hover: rgba(20, 32, 61, 0.6);
+            --border: rgba(56, 189, 248, 0.1);
+            --border-hover: rgba(56, 189, 248, 0.3);
+            --text-main: #f8fafc;
+            --text-muted: #64748b;
+            --accent: #38bdf8;
+            --accent-rgb: 56, 189, 248;
+            --accent-glow: rgba(56, 189, 248, 0.15);
+        }
+
+        .light {
+            --bg: #f8fafc;
+            --surface: rgba(255, 255, 255, 0.7);
+            --surface-hover: rgba(255, 255, 255, 0.9);
+            --border: rgba(2, 132, 199, 0.1);
+            --border-hover: rgba(2, 132, 199, 0.3);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: #0284c7;
+            --accent-rgb: 2, 132, 199;
+            --accent-glow: rgba(2, 132, 199, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1), color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Background Canvas Particle Mesh */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Premium Blurred Nav Interface */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.4s;
+        }
+
+        .nav-logo {
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: -0.04em;
+            color: var(--text-main);
+            background: linear-gradient(135deg, var(--text-main), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .toggle-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .toggle-btn:hover {
+            background: var(--surface-hover);
+            border-color: var(--accent);
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        /* Hero Wrapper */
+        header {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 125px 20px 80px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero {
+            max-width: 850px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes heroReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: 5.5rem;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            line-height: 1.05;
+            margin-bottom: 28px;
+            background: linear-gradient(135deg, var(--text-main) 40%, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            line-height: 1.75;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 36px;
+            background: var(--accent);
+            color: #ffffff !important;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: -0.01em;
+            box-shadow: 0 8px 30px rgba(var(--accent-rgb), 0.3);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(var(--accent-rgb), 0.5);
+        }
+
+        /* Scroll Animation Structural Configurations */
+        section {
+            max-width: 1100px;
+            margin: auto;
+            padding: 120px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-element.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 50px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 4px;
+        }
+
+        /* Glassmorphic Interaction Containers */
+        .card {
+            background: var(--surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .education-group h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -0.02em;
+        }
+
+        .education-group p {
+            font-size: 1.05rem;
+            margin-bottom: 32px;
+        }
+
+        .academic-perf h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .perf-metrics {
+            display: flex;
+            gap: 24px;
+        }
+
+        .metric {
+            background: rgba(var(--accent-rgb), 0.03);
+            border: 1px solid var(--border);
+            padding: 16px 28px;
+            border-radius: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .metric:hover {
+            border-color: var(--accent);
+        }
+
+        .metric span {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1.2;
+            margin-bottom: 4px;
+        }
+
+        .metric label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Competency Architecture */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-badge {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 16px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .skill-badge:hover {
+            background: var(--surface-hover);
+            border-color: var(--accent);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(var(--accent-rgb), 0.08);
+        }
+
+        /* Advanced Project Modules Layout */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 32px;
+        }
+
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .project-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-6px);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.15), 0 0 40px rgba(var(--accent-rgb), 0.05);
+        }
+
+        .project-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            letter-spacing: -0.02em;
+        }
+
+        .project-card p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.65;
+            margin-bottom: 32px;
+        }
+
+        .project-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: gap 0.3s ease, opacity 0.2s ease;
+        }
+
+        .project-link:hover {
+            gap: 14px;
+        }
+
+        /* Interactive Typography Contact Area */
+        .contact-card {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .contact-card h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .contact-card p a {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, var(--text-main), var(--text-main));
+            transition: background 0.4s;
+        }
+
+        .contact-card p a:hover {
+            background: linear-gradient(135deg, var(--accent), #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Screen Geometry Compression Breakpoints */
+        @media (max-width: 768px) {
+            nav { padding: 20px; }
+            .nav-links a { display: none; }
+            .hero h1 { font-size: 3.5rem; }
+            .hero p { font-size: 1.1rem; }
+            .perf-metrics { flex-direction: column; gap: 16px; }
+            section { padding: 80px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animation Mesh Overlay -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation Header -->
+    <nav>
+        <div class="nav-logo">AK</div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#education">Education</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <button class="toggle-btn" onclick="toggleTheme()" aria-label="Toggle Navigation Light Theme Engine">🌙</button>
+        </div>
+    </nav>
+
+    <!-- Main Entry Module -->
+    <header>
+        <div class="hero">
+            <h1>Abhishek Kumar</h1>
+            <p>
+                B.Tech Computer Science & Information Technology Student at REVA University, Bengaluru. 
+                Passionate about Artificial Intelligence, Data Science, Machine Learning, Software Development, and emerging technologies. 
+                Focused on engineering intelligent architectural frameworks and continuously broadening global domain mastery.
+            </p>
+            <a href="#projects" class="btn">Explore Pipeline</a>
+        </div>
+    </header>
+
+    <!-- Profile Summary Module -->
+    <section id="about" class="reveal-element">
+        <h2 class="section-title">About Me</h2>
+        <div class="card">
+            <p>
+                I am a Computer Science & Information Technology student specializing in structural Artificial Intelligence, Data Science engineering pipelines, and core Machine Learning paradigms. 
+                I focus on translating advanced math and computational logic into real-world software components, optimizing programmatic systems to address complex production difficulties.
+            </p>
+        </div>
+    </section>
+
+    <!-- Academic History Module -->
+    <section id="education" class="reveal-element">
+        <h2 class="section-title">Education</h2>
+        <div class="card">
+            <div class="education-group">
+                <h3>REVA University, Bengaluru</h3>
+                <p>B.Tech - Computer Science & Information Technology</p>
+            </div>
+            
+            <div class="academic-perf">
+                <h4>Academic Matrix</h4>
+                <div class="perf-metrics">
+                    <div class="metric">
+                        <span>85%</span>
+                        <label>10th Board Baseline</label>
+                    </div>
+                    <div class="metric">
+                        <span>87%</span>
+                        <label>12th Board Metric</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Architecture Grid -->
+    <section id="skills" class="reveal-element">
+        <h2 class="section-title">Core Competencies</h2>
+        <div class="skills-grid">
+            <div class="skill-badge">Python Programming</div>
+            <div class="skill-badge">Data Science</div>
+            <div class="skill-badge">Artificial Intelligence</div>
+            <div class="skill-badge">Machine Learning</div>
+            <div class="skill-badge">Data Analytics</div>
+            <div class="skill-badge">Git & GitHub</div>
+            <div class="skill-badge">Web Development</div>
+        </div>
+    </section>
+
+    <!-- Project Pipeline Layout -->
+    <section id="projects" class="reveal-element">
+        <h2 class="section-title">Featured Engineering</h2>
+        <div class="projects-grid">
+            
+            <div class="project-card">
+                <div>
+                    <h3>Project 1: Hello World</h3>
+                    <p>Basic core validation program demonstrating pristine version control tracking and deployment infrastructure workflows.</p>
+                </div>
+                <a href="../Project1-HelloWorld/" class="project-link">Source Workspace →</a>
+            </div>
+
+            <div class="project-card">
+                <div>
+                    <h3>Project 2: Hugging Face Analysis</h3>
+                    <p>In-depth structural audit decomposing multi-token performance vectors, model cards, and operational weight properties across trending VLMs.</p>
+                </div>
+                <a href="../Project2-HuggingFace/" class="project-link">Read Evaluation →</a>
+            </div>
+
+            <div class="project-card">
+                <div>
+                    <h3>Project 3: E-Profile Layout</h3>
+                    <p>This premium digital portfolio canvas. Engineered with high-fidelity glassmorphic surfaces and responsive interface structures.</p>
+                </div>
+                <span class="project-link" style="color:var(--text-muted); cursor: default;">Active Render Matrix</span>
+            </div>
+
+            <div class="project-card">
+                <div>
+                    <h3>Project 4: AI & Data Science Platform</h3>
+                    <p>Interactive web system displaying conceptual foundations across deep multi-layer neural spaces and metric learning vectors.</p>
+                </div>
+                <a href="../Project4-AIWebsite/" class="project-link">Initialize Interface →</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Secure Communication Module -->
+    <section id="contact" class="reveal-element">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="card contact-card">
+            <h3>Direct Communication Nodes</h3>
+            <p><a href="mailto:aabhishektmt@gmail.com">aabhishektmt@gmail.com</a></p>
+        </div>
+    </section>
+
+    <!-- Footer Space -->
+    <footer>
+        <p>© 2026 Abhishek Kumar | Professional Engineering Portfolio</p>
+    </footer>
+
+    <!-- Engineering Engine Script Layers -->
+    <script>
+        // High-End Intersections Reveal Implementation
+        const sectionsToReveal = document.querySelectorAll('.reveal-element');
+        const scrollEngineConfig = { threshold: 0.12, rootMargin: "0px 0px -50px 0px" };
+
+        const sectionObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, scrollEngineConfig);
+
+        sectionsToReveal.forEach(section => { sectionObserver.observe(section); });
+
+        // Core Theme Shifting Logic
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle("light");
+            const btn = document.querySelector(".toggle-btn");
+            btn.innerHTML = body.classList.contains("light") ? "☀️" : "🌙";
+        }
+
+        // Kinetic Ambient Particle Matrix Engine
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particleArray = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = Math.random() * 0.2 - 0.1;
+                this.speedY = Math.random() * 0.2 - 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                const isLight = document.body.classList.contains('light');
+                ctx.fillStyle = isLight ? 'rgba(2, 132, 199, 0.15)' : 'rgba(56, 189, 248, 0.25)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particleArray = [];
+            for (let i = 0; i < 65; i++) { particleArray.push(new Particle()); }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particleArray.length; i++) {
+                particleArray[i].update();
+                particleArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+    </script>
+</body>
+</html>
