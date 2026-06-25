@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global News Hub</title>
+
+<style>
+:root{
+--primary:#e63946;
+--dark:#121212;
+--light:#ffffff;
+--card:#f5f5f5;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,sans-serif;
+}
+
+body{
+background:#f2f4f8;
+color:#222;
+transition:0.3s;
+}
+
+body.dark{
+background:#121212;
+color:white;
+}
+
+header{
+background:var(--primary);
+color:white;
+padding:15px;
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.logo{
+font-size:28px;
+font-weight:bold;
+}
+
+.search-box input{
+padding:10px;
+width:250px;
+border:none;
+border-radius:5px;
+}
+
+button{
+padding:10px 15px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+.dark-btn{
+background:black;
+color:white;
+}
+
+.clock{
+font-weight:bold;
+}
+
+nav{
+background:#222;
+padding:12px;
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:10px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+padding:8px 14px;
+background:#333;
+border-radius:20px;
+}
+
+nav a:hover{
+background:var(--primary);
+}
+
+.container{
+width:95%;
+max-width:1400px;
+margin:auto;
+padding:20px;
+}
+
+.section-title{
+margin:20px 0;
+font-size:28px;
+border-left:5px solid var(--primary);
+padding-left:10px;
+}
+
+.weather-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+}
+
+.weather-card{
+background:white;
+padding:15px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+body.dark .weather-card,
+body.dark .news-card,
+body.dark .stock-card{
+background:#1f1f1f;
+}
+
+.stock-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:15px;
+}
+
+.stock-card{
+padding:15px;
+background:white;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.news-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:20px;
+}
+
+.news-card{
+background:white;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+
+.news-card img{
+width:100%;
+height:220px;
+object-fit:cover;
+}
+
+.news-content{
+padding:15px;
+}
+
+.news-content h3{
+margin-bottom:10px;
+}
+
+.news-content span{
+display:inline-block;
+background:var(--primary);
+color:white;
+padding:5px 10px;
+border-radius:15px;
+font-size:12px;
+margin-bottom:10px;
+}
+
+.news-content p{
+margin-bottom:10px;
+}
+
+.news-content a{
+display:inline-block;
+background:var(--primary);
+color:white;
+padding:8px 12px;
+text-decoration:none;
+border-radius:5px;
+}
+
+footer{
+margin-top:30px;
+background:#222;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+.breaking{
+background:#ffcc00;
+padding:10px;
+font-weight:bold;
+overflow:hidden;
+white-space:nowrap;
+}
+
+.marquee{
+display:inline-block;
+animation:scroll 20s linear infinite;
+}
+
+@keyframes scroll{
+from{transform:translateX(100%);}
+to{transform:translateX(-100%);}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="topbar">
+<div class="logo">📰 Global News Hub</div>
+
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Search News...">
+</div>
+
+<div class="clock" id="clock"></div>
+
+<button class="dark-btn" onclick="toggleDark()">
+🌙 Dark Mode
+</button>
+</div>
+</header>
+
+<div class="breaking">
+<div class="marquee">
+🚨 Breaking: Global Markets Update | Karnataka Weather Alert | Sports Headlines | Technology Innovations
+</div>
+</div>
+
+<nav>
+<a href="#">Home</a>
+<a href="#">Sports</a>
+<a href="#">Politics</a>
+<a href="#">Economy</a>
+<a href="#">Stock Market</a>
+<a href="#">Technology</a>
+<a href="#">Entertainment</a>
+<a href="#">Celebrities</a>
+</nav>
+
+<div class="container">
+
+<h2 class="section-title">🌦 Karnataka Weather Dashboard</h2>
+
+<div class="weather-grid">
+
+<div class="weather-card">
+<h3>Bengaluru</h3>
+<p>🌡 27°C</p>
+<p>💧 Humidity: 68%</p>
+<p>🌬 Wind: 10 km/h</p>
+</div>
+
+<div class="weather-card">
+<h3>Mysuru</h3>
+<p>🌡 28°C</p>
+<p>💧 Humidity: 72%</p>
+<p>🌬 Wind: 9 km/h</p>
+</div>
+
+<div class="weather-card">
+<h3>Mangaluru</h3>
+<p>🌡 30°C</p>
+<p>💧 Humidity: 81%</p>
+<p>🌬 Wind: 14 km/h</p>
+</div>
+
+<div class="weather-card">
+<h3>Hubballi</h3>
+<p>🌡 29°C</p>
+<p>💧 Humidity: 64%</p>
+<p>🌬 Wind: 8 km/h</p>
+</div>
+
+<div class="weather-card">
+<h3>Belagavi</h3>
+<p>🌡 26°C</p>
+<p>💧 Humidity: 70%</p>
+<p>🌬 Wind: 11 km/h</p>
+</div>
+
+<div class="weather-card">
+<h3>Shivamogga</h3>
+<p>🌡 25°C</p>
+<p>💧 Humidity: 76%</p>
+<p>🌬 Wind: 7 km/h</p>
+</div>
+
+</div>
+
+<h2 class="section-title">📈 Stock Market</h2>
+
+<div class="stock-grid">
+<div class="stock-card">
+<h3>NIFTY 50</h3>
+<p>25,100 ▲ +0.85%</p>
+</div>
+
+<div class="stock-card">
+<h3>SENSEX</h3>
+<p>82,300 ▲ +0.92%</p>
+</div>
+
+<div class="stock-card">
+<h3>NASDAQ</h3>
+<p>19,650 ▲ +0.45%</p>
+</div>
+</div>
+
+<h2 class="section-title">📰 Latest News</h2>
+
+<div class="news-grid" id="newsGrid">
+
+<div class="news-card">
+<img src="https://picsum.photos/600/400?1">
+<div class="news-content">
+<span>Sports</span>
+<h3>Football Championship Reaches Final Stage</h3>
+<p>Top teams prepare for the biggest clash.</p>
+<a href="#">Read More</a>
+</div>
+</div>
+
+<div class="news-card">
+<img src="https://picsum.photos/600/400?2">
+<div class="news-content">
+<span>Politics</span>
+<h3>Major Political Developments This Week</h3>
+<p>New policy discussions continue globally.</p>
+<a href="#">Read More</a>
+</div>
+</div>
+
+<div class="news-card">
+<img src="https://picsum.photos/600/400?3">
+<div class="news-content">
+<span>Technology</span>
+<h3>AI Innovation Continues To Grow</h3>
+<p>Companies unveil next generation models.</p>
+<a href="#">Read More</a>
+</div>
+</div>
+
+<div class="news-card">
+<img src="https://picsum.photos/600/400?4">
+<div class="news-content">
+<span>Business</span>
+<h3>Stock Markets Show Strong Recovery</h3>
+<p>Investors remain optimistic.</p>
+<a href="#">Read More</a>
+</div>
+</div>
+
+<div class="news-card">
+<img src="https://picsum.photos/600/400?5">
+<div class="news-content">
+<span>Celebrities</span>
+<h3>Popular Celebrity Trends Online</h3>
+<p>Fans react to latest updates.</p>
+<a href="#">Read More</a>
+</div>
+</div>
+
+<div class="news-card">
+<img src="https://picsum.photos/600/400?6">
+<div class="news-content">
+<span>Entertainment</span>
+<h3>New Movie Breaks Box Office Records</h3>
+<p>Huge success in opening weekend.</p>
+<a href="#">Read More</a>
+</div>
+</div>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 Global News Hub | AFE Project Submission
+</footer>
+
+<script>
+
+function updateClock(){
+const now = new Date();
+document.getElementById("clock").innerHTML =
+now.toLocaleString();
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+function toggleDark(){
+document.body.classList.toggle("dark");
+}
+
+document.getElementById("searchInput")
+.addEventListener("keyup",function(){
+
+let filter=this.value.toLowerCase();
+
+let cards=document.querySelectorAll(".news-card");
+
+cards.forEach(card=>{
+
+let text=card.innerText.toLowerCase();
+
+card.style.display=
+text.includes(filter) ? "block" : "none";
+
+});
+});
+
+</script>
+
+</body>
+</html>
